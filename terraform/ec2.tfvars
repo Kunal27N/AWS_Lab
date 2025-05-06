@@ -1,0 +1,5 @@
+vpc_id = "vpc-011f1abc38f496caf"
+subnet_id = "subnet-07ce3df92b7fe9fb1"
+region = "ap-south-1"
+instance_type = "t2.micro"
+ami_id = "ami-0402e56c0a7afb78f"
