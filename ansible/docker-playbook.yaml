@@ -1,0 +1,37 @@
+- name: Install docker on the instance
+  hosts: localhost
+  connection: local
+  become: true
+  tasks: 
+     - name: Installing the dependecies
+       yum:
+         name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+         state: present
+
+     - name: Add Docker CE repo
+       get_url:
+         url: https://download.docker.com/linux/centos/docker-ce.repo
+         dest: /etc/yum.repos.d/docker-ce.repo    
+
+     - name: Install Docker
+       yum:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+        state: latest
+
+     - name: Enable and start Docker service
+       systemd:
+        name: docker
+        enabled: yes
+        state: started   
+     - name: Add user to docker group
+       user:
+        name: "{{ lookup('env', 'USER') }}"
+        groups: docker
+        append: yes  
+   
